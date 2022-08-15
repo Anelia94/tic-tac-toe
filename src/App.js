@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import './App.css';
+import { increaseScore, resetScore } from './redux/counter';
 
 function App() {
   const [userCells, setUserCells] = useState([]);
@@ -8,8 +10,9 @@ function App() {
   const [allCells, setAllCells] = useState();
   const [winner, setWinner] = useState('');
   const [draw, setDraw] = useState(false);
-  const [userPoints, setUserPoints] = useState(0)
-  const [computerPoints, setComputerPoints] = useState(0);
+  const { userPoints } = useSelector(state => state.counter);
+  const { computerPoints } = useSelector(state => state.counter);
+  const dispatch = useDispatch();
 
   const hasWinner = (cells, type) => {
     const firstRow = cells.filter(c => c[0] === 'a');
@@ -32,13 +35,10 @@ function App() {
       || leftDiagonal
       || rightDiagonal) {
       setWinner(type);
-      increasePoints(type);
+      dispatch(increaseScore(type));
     }
   }
 
-  const increasePoints = (type) => {
-    type === 'X' ? setUserPoints(userPoints + 1) : setComputerPoints(computerPoints + 1);
-  }
 
   const userTurn = (clickedCell, cells) => {
     userCells.push(clickedCell);
@@ -83,8 +83,7 @@ function App() {
   }
 
   const restartGame = () => {
-    setComputerPoints(0);
-    setUserPoints(0);
+    dispatch(resetScore());
     clearTable();
   }
 
@@ -109,7 +108,7 @@ function App() {
       && !computerCells.includes(clickedCell)) {
       setAllCells(cells);
       userTurn(clickedCell, cells);
-      
+
       computerTurn(cells);
     }
 
