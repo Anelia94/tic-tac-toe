@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import './App.css';
 import { increaseUserScore, increaseComputerScore, resetScore } from './redux/counter';
-import ScoreContainer from './components/ScoreContainer';
+import { setWinner, resetWinner } from './redux/winnerReducer';
+import Scoreboard from './components/Scoreboard';
+import Winner from './components/Winner';
 
 function App() {
   const [userCells, setUserCells] = useState([]);
   const [computerCells, setComputerCells] = useState([]);
   const [emptyCells, setEmptyCells] = useState(['a0', 'a1', 'a2', 'b0', 'b1', 'b2', 'c0', 'c1', 'c2']);
   const [allCells, setAllCells] = useState();
-  const [winner, setWinner] = useState('');
   const [draw, setDraw] = useState(false);
+
+  const { winner } = useSelector(state => state.winner);
 
   const dispatch = useDispatch();
 
@@ -34,12 +37,16 @@ function App() {
       || thirdCol.length === 3
       || leftDiagonal
       || rightDiagonal) {
-      type === 'X' ?
-        dispatch(increaseUserScore()) : dispatch(increaseComputerScore());
-      setWinner(type);
+
+      if (type === 'X') {
+        dispatch(increaseUserScore());
+        dispatch(setWinner('user'));
+      } else {
+        dispatch(increaseComputerScore());
+        dispatch(setWinner('computer'));
+      }
     }
   }
-
 
   const userTurn = (clickedCell, cells) => {
     userCells.push(clickedCell);
@@ -91,7 +98,7 @@ function App() {
   const clearTable = () => {
     if (emptyCells.length < 9) {
       renderTable(allCells, 'clear');
-      setWinner('');
+      dispatch(resetWinner(''));
       setDraw(false);
       setUserCells([]);
       setComputerCells([]);
@@ -119,18 +126,16 @@ function App() {
   }
   return (
     <div className='app'>
-      <ScoreContainer></ScoreContainer>
+      <Scoreboard></Scoreboard>
       <div className='table-container'>
         {draw &&
           <div className='winner-container' onClick={clearTable} >
             <h2 className='draw' > DRAW!</h2>
           </div>
         }
-        {winner &&
-          <div className='winner-container' onClick={clearTable}>
-            <h2 className={`winner ${winner === 'user'} ? "user" : "computer"}`}> {winner}</h2>
-            WINNER!
-          </div>}
+        {winner && <div className='winner-container' onClick={clearTable}>
+          <Winner></Winner>
+        </div>}
         {(!winner && !draw) &&
           <table className='table'>
             <tbody onClick={onHandleClick}>

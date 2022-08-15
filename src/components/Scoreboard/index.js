@@ -1,6 +1,5 @@
-import React from 'react';
 import { useSelector } from 'react-redux';
-import './ScoreContainer.css';
+import './Scoreboard.css';
 
 function ScoreContainer() {
     const { userPoints } = useSelector(state => state.counter);
