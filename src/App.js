@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import './App.css';
-import { increaseScore, resetScore } from './redux/counter';
+import { increaseUserScore, increaseComputerScore, resetScore } from './redux/counter';
+import ScoreContainer from './components/ScoreContainer';
 
 function App() {
   const [userCells, setUserCells] = useState([]);
@@ -10,8 +11,7 @@ function App() {
   const [allCells, setAllCells] = useState();
   const [winner, setWinner] = useState('');
   const [draw, setDraw] = useState(false);
-  const { userPoints } = useSelector(state => state.counter);
-  const { computerPoints } = useSelector(state => state.counter);
+
   const dispatch = useDispatch();
 
   const hasWinner = (cells, type) => {
@@ -34,8 +34,9 @@ function App() {
       || thirdCol.length === 3
       || leftDiagonal
       || rightDiagonal) {
+      type === 'X' ?
+        dispatch(increaseUserScore()) : dispatch(increaseComputerScore());
       setWinner(type);
-      dispatch(increaseScore(type));
     }
   }
 
@@ -118,10 +119,7 @@ function App() {
   }
   return (
     <div className='app'>
-      <div className='score-container'>
-        <p className='user-score'>X: <strong>{userPoints}</strong></p>
-        <p className='computer-score'>O: <strong>{computerPoints}</strong></p>
-      </div>
+      <ScoreContainer></ScoreContainer>
       <div className='table-container'>
         {draw &&
           <div className='winner-container' onClick={clearTable} >

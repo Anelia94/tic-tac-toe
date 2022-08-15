@@ -7,10 +7,11 @@ export const counterSlice = createSlice({
         computerPoints: 0
     },
     reducers: {
-        increaseScore: (state, type) => {
-            type === 'X' ?
-                state.userPoints += 1 :
-                state.computerPoints += 1;
+        increaseUserScore: (state) => {
+            state.userPoints += 1;
+        },
+        increaseComputerScore: (state) => {
+            state.computerPoints += 1;
         },
         resetScore: (state) => {
             state.userPoints = 0;
@@ -19,5 +20,5 @@ export const counterSlice = createSlice({
     }
 });
 
-export const { increaseScore,resetScore } = counterSlice.actions;
+export const { increaseUserScore, increaseComputerScore, resetScore } = counterSlice.actions;
 export default counterSlice.reducer;
