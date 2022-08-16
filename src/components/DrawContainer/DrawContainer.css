@@ -1,0 +1,11 @@
+.winner-container{
+    height: 33rem;
+    margin-top: 1rem;
+    font-family: "Lucida Console", X"Courier New", monospace;
+    font-size: 100px;
+  }
+  
+.draw{
+    margin: auto;
+    padding-top: 8rem;
+  }

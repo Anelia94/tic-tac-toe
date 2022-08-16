@@ -1,14 +1,16 @@
 import { useSelector } from 'react-redux';
 import './Winner.css';
 
-function Winner() {
+function Winner({ clearTable }) {
     const { winner } = useSelector(state => state.winner);
 
     return <>
-        <h2 className={`winner ${winner.payload === 'user'} 
+        <div className='winner-container' onClick={clearTable}>
+            <h2 className={`winner ${winner.payload === 'user'} 
         ? "user" : "computer"}`}>{winner.payload === 'user' ? 'X' : 'O'}</h2>
-        WINNER!
-    </>;
+            WINNER!
+        </div>
+    </>
 };
 
 export default Winner;

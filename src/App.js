@@ -5,6 +5,8 @@ import { increaseUserScore, increaseComputerScore, resetScore } from './redux/sc
 import { setWinner, resetWinner } from './redux/winnerReducer';
 import Scoreboard from './components/Scoreboard';
 import Winner from './components/WinnerContainer';
+import Draw from './components/DrawContainer';
+import GameBoard from './components/GameBoard';
 
 function App() {
   const [userCells, setUserCells] = useState([]);
@@ -127,38 +129,15 @@ function App() {
   }
   return (
     <div className='app'>
-      <Scoreboard></Scoreboard>
+      <Scoreboard />
       <div className='table-container'>
-        {(winner || draw) &&
-          <div className='winner-container' onClick={clearTable}>
-            {winner
-              ? <Winner></Winner>
-              : <h2 className='draw' > DRAW!</h2>}
-          </div>}
-        {(!winner && !draw) &&
-          <table className='table'>
-            <tbody onClick={onHandleClick}>
-              <tr>
-                <td id='a0' className='bottom right'> </td>
-                <td id='a1' className='bottom right'> </td>
-                <td id='a2' className='bottom'> </td>
-              </tr>
-              <tr>
-                <td id='b0' className='bottom right'> </td>
-                <td id='b1' className='bottom right'> </td>
-                <td id='b2' className='bottom'> </td>
-              </tr>
-              <tr>
-                <td id='c0' className='right'> </td>
-                <td id='c1' className='right'> </td>
-                <td id='c2'> </td>
-              </tr>
-            </tbody>
-          </table>}
+        {winner && <Winner clearTable={clearTable} />}
+        {draw && <Draw clearTable={clearTable} />}
+        {(!winner && !draw) && <GameBoard onHandleClick={onHandleClick} />}
       </div >
       <button
         className='restart-button'
-        onClick={restartGame} >Restart game</button>
+        onClick={restartGame}>Restart game</button>
     </div>
   );
 }
