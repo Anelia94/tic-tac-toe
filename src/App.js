@@ -93,7 +93,6 @@ function App() {
   }
 
   const restartGame = () => {
-    console.log('here');
     clearTable();
     dispatch(resetScore());
   }

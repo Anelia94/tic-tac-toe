@@ -6,8 +6,7 @@ function Winner({ clearTable }) {
 
     return <>
         <div className='winner-container' onClick={clearTable}>
-            <h2 className={`winner ${winner.payload === 'user'} 
-        ? "user" : "computer"}`}>{winner.payload === 'user' ? 'X' : 'O'}</h2>
+            <h2 className='h2-winner'>{winner.payload === 'user' ? 'X' : 'O'}</h2>
             WINNER!
         </div>
     </>

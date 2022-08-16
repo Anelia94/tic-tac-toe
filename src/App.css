@@ -20,7 +20,7 @@ font-family: "Lucida Console", "Courier New", monospace;
     color:blanchedalmond;
   }
 
-  .draw{
+  /* .draw{
     margin: auto;
     padding-top: 8rem;
   }
@@ -28,15 +28,15 @@ font-family: "Lucida Console", "Courier New", monospace;
   .winner{
      margin: auto;
      padding-top: 6rem;
-  }
+  } */
 
   .restart-button{
     background: none;
-	color: inherit;
-	border: none;
-	padding: 0;
-	font: inherit;
-	outline: inherit;
+    color: inherit;
+	  border: none;
+	  padding: 0;
+	  font: inherit;
+	  outline: inherit;
     margin-top: 1rem;
     font-size: 32px;
     color:#13998c;
