@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './App.css';
-import { increaseUserScore, increaseComputerScore, resetScore } from './redux/counter';
+import { increaseUserScore, increaseComputerScore, resetScore } from './redux/scoreCounter';
 import { setWinner, resetWinner } from './redux/winnerReducer';
 import Scoreboard from './components/Scoreboard';
-import Winner from './components/Winner';
+import Winner from './components/WinnerContainer';
 
 function App() {
   const [userCells, setUserCells] = useState([]);
@@ -91,8 +91,9 @@ function App() {
   }
 
   const restartGame = () => {
-    dispatch(resetScore());
+    console.log('here');
     clearTable();
+    dispatch(resetScore());
   }
 
   const clearTable = () => {
@@ -128,14 +129,12 @@ function App() {
     <div className='app'>
       <Scoreboard></Scoreboard>
       <div className='table-container'>
-        {draw &&
-          <div className='winner-container' onClick={clearTable} >
-            <h2 className='draw' > DRAW!</h2>
-          </div>
-        }
-        {winner && <div className='winner-container' onClick={clearTable}>
-          <Winner></Winner>
-        </div>}
+        {(winner || draw) &&
+          <div className='winner-container' onClick={clearTable}>
+            {winner
+              ? <Winner></Winner>
+              : <h2 className='draw' > DRAW!</h2>}
+          </div>}
         {(!winner && !draw) &&
           <table className='table'>
             <tbody onClick={onHandleClick}>

@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import counterReducer from './counter';
+import counterReducer from './scoreCounter';
 import winnerReducer from './winnerReducer';
 
 export default configureStore({
